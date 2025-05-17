@@ -1,0 +1,28 @@
+
+# --- Fichiers générés automatiquement par NetBeans ---
+nbproject/private/
+build/
+dist/
+
+# --- Fichiers Java compilés ---
+*.class
+
+# --- Fichiers temporaires et logs ---
+*.log
+*.tmp
+*.bak
+
+# --- Archives ---
+*.zip
+*.tar
+*.tar.gz
+*.rar
+
+# --- Fichiers système ---
+.DS_Store
+Thumbs.db
+
+# --- Cache / IDE ---
+*.iml
+.idea/
+*.swp
