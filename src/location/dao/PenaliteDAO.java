@@ -221,6 +221,37 @@ private Penalite mapResultSetToPenalite(ResultSet rs) throws SQLException {
             return false;
         }
     }
+    public List<Penalite> getByCin(String cin) {
+    List<Penalite> penalites = new ArrayList<>();
+    String sql = """
+        SELECT p.id_penalite, p.id_location, p.mode_paiement, p.etat_paiement
+        FROM Penalite p
+        JOIN Location l ON p.id_location = l.id_location
+        WHERE l.cin_client = ?
+    """;
+
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        ps.setString(1, cin);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Penalite p = new Penalite();
+            p.setIdPenalite(rs.getInt("id_penalite"));
+            p.setIdLocation(rs.getInt("id_location"));
+            p.setModePaiement(rs.getString("mode_paiement"));
+            p.setEtatPaiement(rs.getString("etat_paiement"));
+            penalites.add(p);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return penalites;
+}
+
 }
     
     // Méthode utilitaire pour mapper un ResultSet à un objet Penalite

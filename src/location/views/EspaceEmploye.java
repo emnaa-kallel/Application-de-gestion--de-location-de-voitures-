@@ -10,16 +10,20 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import location.dao.ClientDAO;
 import location.dao.LocationDAO;
@@ -63,7 +67,13 @@ public class EspaceEmploye extends javax.swing.JFrame {
     }
     void afficherclients() {
     DefaultTableModel model = (DefaultTableModel) Tableclients.getModel();
-    model.setRowCount(0); // vider les lignes avant d'ajouter
+    model.setRowCount(0);
+    Tableclients.setRowHeight(60);
+    // Met à jour les colonnes en ajoutant la colonne "Action"
+    model.setColumnIdentifiers(new Object[] {
+        "CIN", "Nom", "Prénom", "Téléphone", "Email", "Adresse",
+        "Date de naissance", "Permis", "Date exp. permis", "Action"
+    });
 
     ClientDAO dao = new ClientDAO();
     List<Client> liste = dao.getAllClients();
@@ -78,12 +88,18 @@ public class EspaceEmploye extends javax.swing.JFrame {
             c.getAdresse(),
             c.getDateNaissance(),
             c.getPermisConduire(),
-            c.getDateExpirationPermis()
+            c.getDateExpirationPermis(),
+            "Actions" // Valeur affichée dans la cellule action
         };
         model.addRow(ligne);
     }
+
+    // Maintenant, on définit le renderer et l'éditeur pour la colonne "Action"
+    Tableclients.getColumn("Action").setCellRenderer(new ClientActionRenderer());
+    Tableclients.getColumn("Action").setCellEditor(new ClientActionEditor(Tableclients));
 }
     
+
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -107,9 +123,11 @@ public class EspaceEmploye extends javax.swing.JFrame {
         PanelClients = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         Tableclients = new javax.swing.JTable();
+        refreshClientsBtn = new javax.swing.JButton();
         PanelLocations = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         TableLocations = new javax.swing.JTable();
+        jButton3 = new javax.swing.JButton();
         PanelTableVoitures = new javax.swing.JPanel();
         ComboMarque = new javax.swing.JComboBox<>();
         ComboCarburant = new javax.swing.JComboBox<>();
@@ -129,13 +147,13 @@ public class EspaceEmploye extends javax.swing.JFrame {
         labelPrixMax = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TableVoiture = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
         PanelPenalites = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         TablePenalites = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1080, 1080));
-        setPreferredSize(new java.awt.Dimension(1080, 1080));
 
         PanelMain.setMaximumSize(new java.awt.Dimension(1080, 1080));
         PanelMain.setPreferredSize(new java.awt.Dimension(1000, 700));
@@ -197,7 +215,7 @@ public class EspaceEmploye extends javax.swing.JFrame {
                     .addComponent(btnPenalites)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(1613, Short.MAX_VALUE))
         );
         PanelMainLayout.setVerticalGroup(
             PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,46 +243,54 @@ public class EspaceEmploye extends javax.swing.JFrame {
 
         Tableclients.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "CIN", "Nom", "Prénom", "Tel", "Email", "Adresse", "Date de naissance", "Permis de conduire", "Date expiration permis"
+                "CIN", "Nom", "Prénom", "Tel", "Email", "Adresse", "Date de naissance", "Permis de conduire", "Date expiration permis", "Action"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
         });
         jScrollPane4.setViewportView(Tableclients);
+
+        refreshClientsBtn.setText("Rafraichir");
+        refreshClientsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshClientsBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PanelClientsLayout = new javax.swing.GroupLayout(PanelClients);
         PanelClients.setLayout(PanelClientsLayout);
         PanelClientsLayout.setHorizontalGroup(
             PanelClientsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelClientsLayout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 815, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 53, Short.MAX_VALUE))
+                .addGroup(PanelClientsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelClientsLayout.createSequentialGroup()
+                        .addGap(350, 350, 350)
+                        .addComponent(refreshClientsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PanelClientsLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 1395, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(296, Short.MAX_VALUE))
         );
         PanelClientsLayout.setVerticalGroup(
             PanelClientsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelClientsLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addGap(20, 20, 20)
+                .addComponent(refreshClientsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(206, Short.MAX_VALUE))
+                .addContainerGap(168, Short.MAX_VALUE))
         );
 
         PanelLocations.setLayout(null);
@@ -291,7 +317,16 @@ public class EspaceEmploye extends javax.swing.JFrame {
         jScrollPane3.setViewportView(TableLocations);
 
         PanelLocations.add(jScrollPane3);
-        jScrollPane3.setBounds(6, 86, 609, 137);
+        jScrollPane3.setBounds(50, 140, 609, 137);
+
+        jButton3.setText("Rafraichir");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        PanelLocations.add(jButton3);
+        jButton3.setBounds(270, 40, 130, 40);
 
         ComboMarque.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -371,6 +406,13 @@ public class EspaceEmploye extends javax.swing.JFrame {
         TableVoiture.setRowHeight(40);
         jScrollPane1.setViewportView(TableVoiture);
 
+        jButton2.setText("Rafraichir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelTableVoituresLayout = new javax.swing.GroupLayout(PanelTableVoitures);
         PanelTableVoitures.setLayout(PanelTableVoituresLayout);
         PanelTableVoituresLayout.setHorizontalGroup(
@@ -396,25 +438,31 @@ public class EspaceEmploye extends javax.swing.JFrame {
                 .addGap(55, 55, 55)
                 .addComponent(btnVoituresEnMarche, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(PanelTableVoituresLayout.createSequentialGroup()
-                .addGap(132, 132, 132)
-                .addComponent(labelPrixMin, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(212, 212, 212)
-                .addComponent(labelPrixMax, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(106, 106, 106)
-                .addComponent(btnVoituresEnPanne, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(PanelTableVoituresLayout.createSequentialGroup()
                 .addGap(298, 298, 298)
                 .addComponent(btnRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(301, 301, 301)
                 .addComponent(btnVoituresLouees, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(PanelTableVoituresLayout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(btnAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(555, 555, 555)
-                .addComponent(btnVoituresDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(PanelTableVoituresLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1400, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(PanelTableVoituresLayout.createSequentialGroup()
+                .addGroup(PanelTableVoituresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelTableVoituresLayout.createSequentialGroup()
+                        .addGap(132, 132, 132)
+                        .addComponent(labelPrixMin, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PanelTableVoituresLayout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(btnAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(212, 212, 212)
+                .addGroup(PanelTableVoituresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelTableVoituresLayout.createSequentialGroup()
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(121, 121, 121)
+                        .addComponent(btnVoituresDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PanelTableVoituresLayout.createSequentialGroup()
+                        .addComponent(labelPrixMax, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(106, 106, 106)
+                        .addComponent(btnVoituresEnPanne, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         PanelTableVoituresLayout.setVerticalGroup(
             PanelTableVoituresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -454,11 +502,12 @@ public class EspaceEmploye extends javax.swing.JFrame {
                     .addComponent(btnRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVoituresLouees, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
-                .addGroup(PanelTableVoituresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PanelTableVoituresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(PanelTableVoituresLayout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addComponent(btnAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnVoituresDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnVoituresDisponibles, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
                 .addGap(23, 23, 23)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -484,21 +533,35 @@ public class EspaceEmploye extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(TablePenalites);
 
+        jButton1.setText("Rafraichir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelPenalitesLayout = new javax.swing.GroupLayout(PanelPenalites);
         PanelPenalites.setLayout(PanelPenalitesLayout);
         PanelPenalitesLayout.setHorizontalGroup(
             PanelPenalitesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelPenalitesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(960, Short.MAX_VALUE))
+                .addGroup(PanelPenalitesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelPenalitesLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PanelPenalitesLayout.createSequentialGroup()
+                        .addGap(278, 278, 278)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(909, Short.MAX_VALUE))
         );
         PanelPenalitesLayout.setVerticalGroup(
             PanelPenalitesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelPenalitesLayout.createSequentialGroup()
-                .addGap(71, 71, 71)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(571, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(531, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -507,8 +570,8 @@ public class EspaceEmploye extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 2091, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(212, 212, 212)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 2094, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(209, 209, 209)
                 .addComponent(PanelClients, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(308, 308, 308)
                 .addComponent(PanelTableVoitures, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -798,6 +861,72 @@ void afficherLocations() {
         model.addRow(ligne);
     }
 }
+// Renderer pour les boutons dans la colonne "Action" clients
+class ClientActionRenderer extends JPanel implements TableCellRenderer {
+    public ClientActionRenderer() {
+        setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
+        JButton btnPenalites = new JButton("Pénalités");
+        JButton btnLocations = new JButton("Locations");
+        // On peut désactiver les boutons pour le rendu, ou pas
+        btnPenalites.setEnabled(false);
+        btnLocations.setEnabled(false);
+        add(btnPenalites);
+        add(btnLocations);
+    }
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value,
+                                                   boolean isSelected, boolean hasFocus, int row, int column) {
+        return this;
+    }
+}
+
+// Editor pour gérer le clic sur les boutons clients
+class ClientActionEditor extends AbstractCellEditor implements TableCellEditor {
+    private JPanel panel;
+    private JButton btnPenalites;
+    private JButton btnLocations;
+    private String cin; // on suppose que le CIN est en colonne 0
+    private JTable table;
+
+    public ClientActionEditor(JTable table) {
+        this.table = table;
+        panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
+        btnPenalites = new JButton("Pénalités");
+        btnLocations = new JButton("Locations");
+
+        btnPenalites.addActionListener(e -> {
+            if (cin != null) {
+                // Ouvre la fenêtre d'historique pénalités avec le CIN client
+                new FicheHistoriquePenalites(cin).setVisible(true);
+            }
+            fireEditingStopped();
+        });
+
+        btnLocations.addActionListener(e -> {
+            if (cin != null) {
+                // Ouvre la fenêtre d'historique locations avec le CIN client
+                new FicheHistoriqueLocations(cin).setVisible(true);
+            }
+            fireEditingStopped();
+        });
+
+        panel.add(btnPenalites);
+        panel.add(btnLocations);
+    }
+
+    @Override
+    public Component getTableCellEditorComponent(JTable table, Object value,
+                                                 boolean isSelected, int row, int column) {
+        cin = table.getValueAt(row, 0).toString(); // Récupère le CIN en colonne 0
+        return panel;
+    }
+
+    @Override
+    public Object getCellEditorValue() {
+        return null;
+    }
+}
 
 
     private void btnVoituresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoituresActionPerformed
@@ -816,7 +945,6 @@ void afficherLocations() {
         jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount() - 1);
     
 }
-
 
 
     }//GEN-LAST:event_btnVoituresActionPerformed
@@ -899,8 +1027,26 @@ void afficherLocations() {
     }//GEN-LAST:event_btnVoituresDisponiblesActionPerformed
 
     private void btnAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAjouterActionPerformed
-        // TODO add your handling code here:
+        FicheAjoutVoiture f = new FicheAjoutVoiture();  // Crée une instance
+    f.setLocationRelativeTo(null);                  // Centre la fenêtre
+    f.setVisible(true);  
     }//GEN-LAST:event_btnAjouterActionPerformed
+
+    private void refreshClientsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshClientsBtnActionPerformed
+        afficherclients();
+    }//GEN-LAST:event_refreshClientsBtnActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        afficherPenalites();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        getAllVoitures();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        afficherLocations();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -961,6 +1107,9 @@ void afficherLocations() {
     private javax.swing.JButton btnVoituresEnMarche;
     private javax.swing.JButton btnVoituresEnPanne;
     private javax.swing.JButton btnVoituresLouees;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -974,6 +1123,7 @@ void afficherLocations() {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel labelPrixMax;
     private javax.swing.JLabel labelPrixMin;
+    private javax.swing.JButton refreshClientsBtn;
     private javax.swing.JSlider sliderPrixMax;
     private javax.swing.JSlider sliderPrixMin;
     // End of variables declaration//GEN-END:variables
