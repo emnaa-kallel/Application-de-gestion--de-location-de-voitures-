@@ -294,7 +294,36 @@ private Location mapResultSetToLocation(ResultSet rs) throws SQLException {
             return false;
         }
     }
-    
+    public List<Location> getByCin(String cin) {
+    List<Location> locations = new ArrayList<>();
+    String sql = "SELECT id_location, immatriculation, date_debut, date_fin, date_retour, mode_paiement, statut FROM Location WHERE cin_client = ?";
+
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        ps.setString(1, cin);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Location loc = new Location();
+            loc.setId(rs.getInt("id_location"));
+            loc.setVoitureId(rs.getString("immatriculation"));
+            loc.setDateDebut(rs.getDate("date_debut"));
+            loc.setDateFin(rs.getDate("date_fin"));
+            loc.setDateRetour(rs.getDate("date_retour"));
+            loc.setModePaiement(rs.getString("mode_paiement"));
+            loc.setStatut(rs.getString("statut"));
+
+            locations.add(loc);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return locations;
+}
+
     // Supprimer une location
     public boolean supprimer(int idLocation) {
         String sql = "DELETE FROM location WHERE id_location = ?";

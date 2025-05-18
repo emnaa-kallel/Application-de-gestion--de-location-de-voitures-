@@ -7,6 +7,23 @@
             <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/dao/PenaliteDAO.java</file>
             <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/views/ReservationFrame.java</file>
             <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/views/validerlocation.java</file>
+            <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/views/EspaceEmploye.java</file>
+            <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/dao/LocationDAO.java</file>
+            <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/dao/ClientDAO.java</file>
+            <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/views/FicheModifVoiture.java</file>
+            <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/views/FicheAjoutVoiture.java</file>
+            <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/models/Voiture.java</file>
+            <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/dao/VoitureDAO.java</file>
+            <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/views/FicheHistoriquePenalites.java</file>
+            <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/views/FicheHistoriqueLocations.java</file>
+            <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/views/AdminDashboard.java</file>
+            <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/dao/UtilisateurDAO.java</file>
+            <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/dao/PersonnelDAO.java</file>
+            <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/models/Reservation.java</file>
+            <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/utils/DatabaseConnection.java</file>
+            <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/dao/UtilisateurDemoDAO.java</file>
+            <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/views/employeajout.java</file>
+            <file>file:/C:/Users/onsai/OneDrive/Desktop/Location%20voiture%20final%20(3)/Location%20voiture%20final/src/location/views/employe.java</file>
         </group>
     </open-files>
 </project-private>

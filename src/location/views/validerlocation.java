@@ -21,9 +21,7 @@ import location.utils.DatabaseConnection;
  */
 public class validerlocation extends javax.swing.JFrame {
 
-    /**
-     * Creates new form validerlocation
-     */
+  
     private String datef;
     private String idloc;
     private String imm;

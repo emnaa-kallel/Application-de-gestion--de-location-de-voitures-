@@ -47,11 +47,11 @@ public class Voiture {
         this.marque = marque;
         this.modele = modele;
         this.annee = annee;
-        setEtat(etat);
-        setDisponibilite(disponibilite);
+        this.etat = etat;
+        this.disponibilite = disponibilite;
         this.prixJour = prixJour;
-        setCarburant(carburant);
-        setTransmission(transmission);
+        this.carburant = carburant;
+        this.transmission =transmission;
         this.dateDebutAssurance = dateDebutAssurance;
         this.dateExpirationAssurance = dateExpirationAssurance;
         this.idAssurance = idAssurance;
