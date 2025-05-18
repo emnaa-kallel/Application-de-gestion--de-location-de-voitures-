@@ -3,8 +3,9 @@ package location.views;
 import javax.swing.JOptionPane;
 import location.dao.PersonalDAO;
 import location.dao.PersonnelDAO;
+import location.dao.UtilisateurDAO;
 import location.models.Personnel;
-
+import location.models.Utilisateur; 
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -180,10 +181,10 @@ public class employe extends javax.swing.JFrame {
         int cin = Integer.parseInt(txtcin2.getText());
         String nom = txtNom2.getText();
         String prenom = txtPrenom2.getText();
-        String tel = txtTel2.getText();
+        int tel = Integer.parseInt(txtTel2.getText());
         String email = txtEmail2.getText();
         
-        Personnel personnel = new Personnel();
+        Utilisateur personnel = new Utilisateur();
         personnel.setCin(cin);
         personnel.setNom(nom);
         personnel.setPrenom(prenom);
@@ -191,7 +192,7 @@ public class employe extends javax.swing.JFrame {
         personnel.setEmail(email);
         
 
-        PersonnelDAO dao = new PersonnelDAO();
+        UtilisateurDAO dao = new UtilisateurDAO();
         boolean success = dao.modifier(personnel);
 
         if (success) {
@@ -214,9 +215,11 @@ public class employe extends javax.swing.JFrame {
          try {
         int cin = Integer.parseInt(txtcin2.getText());
         PersonnelDAO dao = new PersonnelDAO();
-        boolean success = dao.supprimer(cin);
-
-        if (success) {
+        UtilisateurDAO dao2 = new UtilisateurDAO();
+        boolean success1 = dao.supprimer(cin);
+        boolean success2 = dao2.supprimer(cin);
+        
+        if (success1 && success2) {
             JOptionPane.showMessageDialog(this, "Personnel supprimee avec succès !");
         } else {
             JOptionPane.showMessageDialog(this, "Échec de la suppression du personnel.");
