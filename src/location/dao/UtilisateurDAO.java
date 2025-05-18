@@ -53,6 +53,24 @@ public class UtilisateurDAO {
     }
 
     }
+    
+     // Supprimer un utilisateur
+    public boolean supprimer(int cin) {
+        String sql = "DELETE FROM UTILISATEUR WHERE CIN = ?";
+        
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, cin);
+            
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+            
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la suppression de l'utilisateur: " + e.getMessage());
+            return false;
+        }
+    }
 
     // Méthode pour lister tous les utilisateurs
     public List<Utilisateur> listerTous() {
@@ -183,6 +201,28 @@ public class UtilisateurDAO {
             pstmt.setString(6, utilisateur.getEmail());
             pstmt.setString(7, utilisateur.getTypeUtilisateur());
             pstmt.setInt(8, utilisateur.getCin());
+            
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+            
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la mise à jour de l'utilisateur: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean modifier(Utilisateur utilisateur) {
+        String sql = "UPDATE Utilisateur SET nom = ?, prenom = ?, "
+                + "tel = ?, email = ? WHERE CIN = ?";
+        
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, utilisateur.getNom());
+            pstmt.setString(2, utilisateur.getPrenom());
+            pstmt.setInt(3, utilisateur.getTel());
+            pstmt.setString(4, utilisateur.getEmail());
+            pstmt.setInt(5, utilisateur.getCin());
             
             int affectedRows = pstmt.executeUpdate();
             return affectedRows > 0;

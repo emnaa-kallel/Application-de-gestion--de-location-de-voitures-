@@ -337,10 +337,12 @@ class MultiButtonEditor extends DefaultCellEditor {
             return; // annuler suppression
         }
 
+        UtilisateurDAO dao1= new UtilisateurDAO();
         ClientDAO dao = new ClientDAO();
         boolean success = dao.supprimer(cin);
+        boolean success1 = dao1.supprimer(cin);
 
-        if (success) {
+        if (success && success1) {
             JOptionPane.showMessageDialog(AdminDashboard.this, "Client supprimé avec succès !");
             // Rafraîchir la table (exemple simple, adapter selon ton modèle de données)
             ((DefaultTableModel) jTable3.getModel()).removeRow(selectedRow);
