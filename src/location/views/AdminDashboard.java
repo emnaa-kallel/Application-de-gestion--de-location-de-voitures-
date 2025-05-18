@@ -871,8 +871,8 @@ class MultiButtonEditor extends DefaultCellEditor {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         String url = "jdbc:oracle:thin:@localhost:1521:xe"; 
-    String user = "system";
-    String password = "emna12";
+    String user = "C##emnaa";
+    String password = "123456";
         String sql = "SELECT immatriculation, marque, modele, annee, etat, disponibilite, prix_jour, carburant, transmission,date_debut_assurance, date_expiration_assurance, id_assurance FROM Voiture";
 
      try ( Connection conn = DatabaseConnection.getConnection();
@@ -908,8 +908,8 @@ class MultiButtonEditor extends DefaultCellEditor {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
          String url = "jdbc:oracle:thin:@localhost:1521:xe"; // À adapter à ton cas
-    String user = "system";
-    String password = "emna12";
+    String user = "C##emnaa";
+    String password = "123456";
 String sql = "SELECT p.CIN, u.nom, u.prenom, u.tel, u.email " +
              "FROM Utilisateur u " +
              "JOIN Personnel p ON u.CIN = p.CIN " +
@@ -950,8 +950,8 @@ String sql = "SELECT p.CIN, u.nom, u.prenom, u.tel, u.email " +
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
             String url = "jdbc:oracle:thin:@localhost:1521:xe"; // Ton URL de connexion à Oracle
-    String user = "system"; // Ton utilisateur Oracle
-    String password = "emna12"; // Ton mot de passe Oracle
+    String user = "C##emnaa"; // Ton utilisateur Oracle
+    String password = "123456"; // Ton mot de passe Oracle
 
     String sql =  "SELECT c.CIN, nom, prenom, tel, email, adresse, date_naissance, permis_conduire, date_expiration_permis " +
     "FROM Utilisateur u " +
@@ -994,8 +994,8 @@ String sql = "SELECT p.CIN, u.nom, u.prenom, u.tel, u.email " +
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
         String url = "jdbc:oracle:thin:@localhost:1521:xe"; // À adapter à ton cas
-    String user = "system";
-    String password = "emna12";
+    String user = "C##emnaa";
+    String password = "123456";
         String sql = "SELECT id_location, CIN_client, immatriculation, date_debut, date_fin ,date_retour,mode_paiement,statut FROM Location";
 
     try ( Connection conn = DatabaseConnection.getConnection();

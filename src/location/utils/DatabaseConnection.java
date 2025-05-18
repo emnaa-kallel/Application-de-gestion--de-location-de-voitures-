@@ -7,8 +7,8 @@ import java.sql.SQLException;
 public class DatabaseConnection {
     // Informations de connexion - à adapter selon votre configuration
     private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-    private static final String USER = "sahar";
-    private static final String PASSWORD = "oracle";
+    private static final String USER = "C##emnaa";
+    private static final String PASSWORD = "123456";
     
     private static Connection connection = null;
     
