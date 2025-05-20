@@ -220,14 +220,14 @@ public class ClientDashboard2 extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel5.setText("ESPACE CLIENT");
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/location/views/rent-ezgif.com-resize.gif"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon("C:\\Users\\emnak\\assembler_location_voiture\\src\\location\\views\\location.gif")); // NOI18N
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/location/views/editcompte.gif"))); // NOI18N
+        jButton5.setIcon(new javax.swing.ImageIcon("C:\\Users\\emnak\\assembler_location_voiture\\src\\location\\views\\editcompte.gif")); // NOI18N
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -242,14 +242,14 @@ public class ClientDashboard2 extends javax.swing.JFrame {
 
         jLabel19.setText("Modifier mon compte");
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/location/views/keys-ezgif.com-resize.gif"))); // NOI18N
+        jButton6.setIcon(new javax.swing.ImageIcon("C:\\Users\\emnak\\assembler_location_voiture\\src\\location\\views\\keys-ezgif.com-resize.gif")); // NOI18N
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/location/views/penalite.gif"))); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\emnak\\assembler_location_voiture\\src\\location\\views\\penalite.gif")); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -327,8 +327,6 @@ public class ClientDashboard2 extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("acceuil", jPanel2);
-
-        jPanel3.setBackground(new java.awt.Color(102, 204, 255));
 
         jLabel1.setText("Voitures Disponibles");
 

@@ -106,8 +106,6 @@ public class FicheModifVoiture extends javax.swing.JFrame {
 
         transMission.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "automatique", "manuel" }));
 
-        idAssModif.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         enregVoitModifBtn.setText("Enregistrer");
         enregVoitModifBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -274,6 +272,9 @@ public void setVoitureOrigine(Voiture v) {
     for (Assurance assurance : assurances) {
         idAssModif.addItem(String.valueOf(assurance.getIdAssurance()));
     }
+    idAssModif.revalidate();
+    idAssModif.repaint();
+
 }
 public void remplirChamps(Voiture voiture) {
     immatModif.setText(voiture.getImmatriculation());

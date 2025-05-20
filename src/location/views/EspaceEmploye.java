@@ -158,28 +158,28 @@ public class EspaceEmploye extends javax.swing.JFrame {
         PanelMain.setMaximumSize(new java.awt.Dimension(1080, 1080));
         PanelMain.setPreferredSize(new java.awt.Dimension(1000, 700));
 
-        btnVoitures.setIcon(new javax.swing.ImageIcon(getClass().getResource("/location/views/car.gif"))); // NOI18N
+        btnVoitures.setIcon(new javax.swing.ImageIcon("C:\\Users\\emnak\\assembler_location_voiture\\src\\location\\views\\car.gif")); // NOI18N
         btnVoitures.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVoituresActionPerformed(evt);
             }
         });
 
-        btnClients.setIcon(new javax.swing.ImageIcon(getClass().getResource("/location/views/client.gif"))); // NOI18N
+        btnClients.setIcon(new javax.swing.ImageIcon("C:\\Users\\emnak\\assembler_location_voiture\\src\\location\\views\\client.gif")); // NOI18N
         btnClients.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnClientsActionPerformed(evt);
             }
         });
 
-        btnLocations.setIcon(new javax.swing.ImageIcon(getClass().getResource("/location/views/location.gif"))); // NOI18N
+        btnLocations.setIcon(new javax.swing.ImageIcon("C:\\Users\\emnak\\assembler_location_voiture\\src\\location\\views\\location.gif")); // NOI18N
         btnLocations.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLocationsActionPerformed(evt);
             }
         });
 
-        btnPenalites.setIcon(new javax.swing.ImageIcon(getClass().getResource("/location/views/penalite_1.gif"))); // NOI18N
+        btnPenalites.setIcon(new javax.swing.ImageIcon("C:\\Users\\emnak\\assembler_location_voiture\\src\\location\\views\\penalite_1.gif")); // NOI18N
         btnPenalites.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPenalitesActionPerformed(evt);
@@ -236,7 +236,7 @@ public class EspaceEmploye extends javax.swing.JFrame {
                 .addGroup(PanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(132, Short.MAX_VALUE))
+                .addContainerGap(2388, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Accueil", PanelMain);
@@ -968,24 +968,6 @@ class ClientActionEditor extends AbstractCellEditor implements TableCellEditor {
 
     }//GEN-LAST:event_btnClientsActionPerformed
 
-    private void btnLocationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocationsActionPerformed
-        boolean tabExiste = false;
-        for (int i = 0; i < jTabbedPane1.getTabCount(); i++) {
-        if (jTabbedPane1.getTitleAt(i).equals("Consulter locations")) {
-            tabExiste = true;
-            jTabbedPane1.setSelectedIndex(i);
-            break;
-            
-        }
-        }
-        if (!tabExiste) {
-            jTabbedPane1.addTab("Consulter locations", PanelLocations);
-            jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount() - 1);
-           
-        }
-       
-    }//GEN-LAST:event_btnLocationsActionPerformed
-
     private void btnPenalitesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPenalitesActionPerformed
         boolean tabExiste = false;
         for (int i = 0; i < jTabbedPane1.getTabCount(); i++) {
@@ -1047,6 +1029,24 @@ class ClientActionEditor extends AbstractCellEditor implements TableCellEditor {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         afficherLocations();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btnLocationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocationsActionPerformed
+        boolean tabExiste = false;
+        for (int i = 0; i < jTabbedPane1.getTabCount(); i++) {
+            if (jTabbedPane1.getTitleAt(i).equals("Consulter locations")) {
+                tabExiste = true;
+                jTabbedPane1.setSelectedIndex(i);
+                break;
+
+            }
+        }
+        if (!tabExiste) {
+            jTabbedPane1.addTab("Consulter locations", PanelLocations);
+            jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount() - 1);
+
+        }
+
+    }//GEN-LAST:event_btnLocationsActionPerformed
 
     /**
      * @param args the command line arguments

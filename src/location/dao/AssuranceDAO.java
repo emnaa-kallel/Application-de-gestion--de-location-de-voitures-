@@ -65,7 +65,7 @@ public class AssuranceDAO {
       // Obtenir toutes les assurances
 public List<Assurance> getAllAssurances() {
     List<Assurance> liste = new ArrayList<>();
-    String sql = "SELECT * FROM SYS.Assurance";
+    String sql = "SELECT * FROM Assurance";
 
     try (Connection con = DatabaseConnection.getConnection();
          PreparedStatement stmt = con.prepareStatement(sql);

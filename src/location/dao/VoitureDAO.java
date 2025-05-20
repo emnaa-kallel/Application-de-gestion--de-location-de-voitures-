@@ -307,7 +307,7 @@ public class VoitureDAO {
     
           public List<String> getAnnees() {
         List<String> annees = new ArrayList<>();
-        String query = "SELECT DISTINCT ANNEE FROM sys.VOITURE ORDER BY ANNEE DESC";
+        String query = "SELECT DISTINCT ANNEE FROM  VOITURE ORDER BY ANNEE DESC";
         
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement();

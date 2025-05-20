@@ -27,6 +27,7 @@ import location.dao.ClientDAO;
 import location.dao.UtilisateurDAO;
 import location.dao.PersonnelDAO;
 import location.dao.VoitureDAO;
+import location.models.Voiture;
 import location.utils.DatabaseConnection;
 
 /**
@@ -129,8 +130,25 @@ class ButtonEditor extends DefaultCellEditor {
                 switch (tableId) {
                     case "table1":
                         var  mat = jTableVoiture.getValueAt(jTableVoiture.getSelectedRow(),0).toString();
-                        var v = new VoitureDAO().trouverParImmatriculation(mat);
-                        new voiture(v).setVisible(true);
+                        //var v = new VoitureDAO().trouverParImmatriculation(mat);
+                        //new voiture(v).setVisible(true);
+                        //new FicheModifVoiture().setVisible(true);
+                        VoitureDAO voitureDAO = new VoitureDAO();
+                        Voiture voiture = voitureDAO.trouverParImmatriculation(mat); 
+
+                        if (voiture != null) {
+                            FicheModifVoiture fiche = new FicheModifVoiture();
+
+                            // Charger les IDs d'assurance dans le combo box
+                            fiche.chargerIdAssurances();
+
+                            // Remplir les champs avec les données de la voiture
+                            fiche.remplirChamps(voiture); // Tu dois créer cette méthode dans FicheModifVoiture
+                            fiche.setVoitureOrigine(voiture);
+                            fiche.setVisible(true);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Voiture non trouvée avec l'immatriculation : " + mat);
+                        }
                         break;
                     case "table2":
                         new employe().setVisible(true);
@@ -422,6 +440,8 @@ class MultiButtonEditor extends DefaultCellEditor {
         jButton11 = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable6 = new javax.swing.JTable();
+        jButton6 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -477,7 +497,7 @@ class MultiButtonEditor extends DefaultCellEditor {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txt1, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
                             .addComponent(txt0))))
-                .addContainerGap(151, Short.MAX_VALUE))
+                .addContainerGap(157, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -559,7 +579,7 @@ class MultiButtonEditor extends DefaultCellEditor {
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1125, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1131, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -625,7 +645,7 @@ class MultiButtonEditor extends DefaultCellEditor {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1010, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -674,7 +694,7 @@ class MultiButtonEditor extends DefaultCellEditor {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1125, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1131, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(328, 328, 328)
@@ -727,7 +747,7 @@ class MultiButtonEditor extends DefaultCellEditor {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1119, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1125, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(142, 142, 142)
@@ -787,7 +807,7 @@ class MultiButtonEditor extends DefaultCellEditor {
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(101, 101, 101)
                         .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(124, Short.MAX_VALUE))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -801,6 +821,20 @@ class MultiButtonEditor extends DefaultCellEditor {
 
         jTabbedPane1.addTab("Consultation Pénalités", jPanel7);
 
+        jButton6.setText("Déconnexion");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton8.setText("Retour");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -808,16 +842,23 @@ class MultiButtonEditor extends DefaultCellEditor {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addComponent(jTabbedPane1)))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 909, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6)
+                    .addComponent(jButton8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane1))
         );
@@ -1070,6 +1111,18 @@ String sql = "SELECT p.CIN, u.nom, u.prenom, u.tel, u.email " +
      
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        new loginframe().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        new HomeFrame().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1115,7 +1168,9 @@ String sql = "SELECT p.CIN, u.nom, u.prenom, u.tel, u.email " +
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

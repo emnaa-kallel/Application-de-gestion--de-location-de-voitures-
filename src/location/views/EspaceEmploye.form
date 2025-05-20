@@ -128,7 +128,7 @@
                           <Component id="jLabel3" min="-2" pref="29" max="-2" attributes="0"/>
                           <Component id="jLabel4" min="-2" pref="29" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="132" max="32767" attributes="0"/>
+                      <EmptySpace pref="2388" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -137,7 +137,7 @@
             <Component class="javax.swing.JButton" name="btnVoitures">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/location/views/car.gif"/>
+                  <Image iconType="2" name="C:\Users\emnak\assembler_location_voiture\src\location\views\car.gif"/>
                 </Property>
               </Properties>
               <Events>
@@ -147,7 +147,7 @@
             <Component class="javax.swing.JButton" name="btnClients">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/location/views/client.gif"/>
+                  <Image iconType="2" name="C:\Users\emnak\assembler_location_voiture\src\location\views\client.gif"/>
                 </Property>
               </Properties>
               <Events>
@@ -157,7 +157,7 @@
             <Component class="javax.swing.JButton" name="btnLocations">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/location/views/location.gif"/>
+                  <Image iconType="2" name="C:\Users\emnak\assembler_location_voiture\src\location\views\location.gif"/>
                 </Property>
               </Properties>
               <Events>
@@ -167,7 +167,7 @@
             <Component class="javax.swing.JButton" name="btnPenalites">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/location/views/penalite_1.gif"/>
+                  <Image iconType="2" name="C:\Users\emnak\assembler_location_voiture\src\location\views\penalite_1.gif"/>
                 </Property>
               </Properties>
               <Events>
